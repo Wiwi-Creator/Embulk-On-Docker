@@ -1,0 +1,25 @@
+in:
+  type: sqlserver
+  host: {{ env.HOSTIP }}
+  port: {{ env.PORT }}
+  user: {{ env.USER }}
+  password: "{{ env.PASSWORD }}"
+  database: {{ env.database }}
+  table: {{ env.table }}
+  select: "*"
+  default_column_options:
+    bit: {type: boolean}
+
+out:
+  type: bigquery
+  mode: replace
+  auth_method: application_default
+  gcs_bucket: digdag_buffer
+  auto_create_gcs_bucket: true
+  auto_create_dataset: true
+  auto_create_table: true
+  allow_quoted_newlines: true
+  prevent_duplicate_insert: true
+  project: {{ env.PROJECTID }}
+  dataset: {{ env.dataset }}
+  table: {{ env.database }}__{{ env.table }}
